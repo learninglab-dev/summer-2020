@@ -21,7 +21,22 @@
         <a href="enter-view-test">enter-view-test</a>
       </li>
     </ol>
+    <h2>observable test</h2>
+    <div id="observablehq-b870da59"></div>
+<script type="module">
+import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import define from "https://api.observablehq.com/d/26fd41dc443d772f.js?v=3";
+const inspect = Inspector.into("#observablehq-b870da59");
+(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+</script>
   </div>
+  <div id="observablehq-9a29f4b0"></div>
+<script type="module">
+import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import define from "https://api.observablehq.com/d/26fd41dc443d772f.js?v=3";
+const inspect = Inspector.into("#observablehq-9a29f4b0");
+(new Runtime).module(define, name => name === "tree" ? inspect() : undefined);
+</script>
   <script src="script.js"></script>
 </body>
 </html>
