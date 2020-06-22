@@ -292,7 +292,7 @@ body {
 }
 
 .focus text {
-  font-size: 14px;
+  font-size: 10px;
 }
 
 .tooltip {
@@ -303,4 +303,17 @@ body {
 .tooltip-date, .tooltip-likes {
   font-weight: bold;
 }
+
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+.zoom {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+
 
