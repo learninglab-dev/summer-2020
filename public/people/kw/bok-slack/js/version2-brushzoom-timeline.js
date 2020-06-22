@@ -112,6 +112,7 @@ d3.csv("data/bokcenter-slack.csv", type, function (error, data) {
 
     console.log(data);
 
+
     // //Tooltip
     // var bisectDate = d3.bisector(function(d) { return d.Date; }).left;
     //
@@ -164,6 +165,67 @@ d3.csv("data/bokcenter-slack.csv", type, function (error, data) {
     //     focus2.select(".tooltip-date").text(dateFormatter(d.Date));
     //     focus2.select(".tooltip-messages").text(d["Messages posted"]);
     // }
+
+    //Tooltip
+    var bisectDate = d3.bisector(function(d) { return d.Date; }).left;
+
+    var focus2 = svg2.append("g")
+        .attr("class", "focus2")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .style("display", "none");
+
+    focus2.append("circle")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .attr("r", 3);
+
+    focus2.append("rect")
+        .attr("class", "tooltip")
+        .attr("width", 100)
+        .attr("height", 50)
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .attr("x", 10)
+        .attr("y", -22)
+        .attr("rx", 4)
+        .attr("ry", 4);
+
+    focus2.append("text")
+        .attr("class", "tooltip-date")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .attr("x", 18)
+        .attr("y", -2);
+
+    focus2.append("text")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .attr("x", 18)
+        .attr("y", 18)
+        .text("Messages: ");
+
+    focus2.append("text")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .attr("class", "tooltip-messages")
+        .attr("x", 70)
+        .attr("y", 18);
+
+    svg2.append("rect")
+        .attr("class", "overlay")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .on("mouseover", function() { focus2.style("display", null); })
+        .on("mouseout", function() { focus2.style("display", "none"); })
+        .on("mousemove", mousemove);
+
+    function mousemove() {
+        var x0 = x.invert(d3.mouse(this)[0]),
+            i = bisectDate(data, x0, 1),
+            d0 = data[i - 1],
+            d1 = data[i],
+            d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+        focus2.attr("transform", "translate(" + x(d.Date) + "," + y(d["Messages posted"]) + ")");
+        focus2.select(".tooltip-date").text(dateFormatter(d.Date));
+        focus2.select(".tooltip-messages").text(d["Messages posted"]);
+    }
+
 
 });
 

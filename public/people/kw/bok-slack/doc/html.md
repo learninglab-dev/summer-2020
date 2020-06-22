@@ -169,6 +169,7 @@ it before the other scripts in the bottom of the page:
     <script src="https://polyfill.io/v3/polyfill.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/basic-tooltip-brushzoom.js"></script>
+
 </body>
 ```
 
