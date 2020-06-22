@@ -1,0 +1,79 @@
+#background {
+  background: white;
+  min-width: 100vw;
+  min-height: 270vh;
+}
+
+#target {
+  border-top: 5px dashed black;
+  position: fixed;
+  top: 25%;
+  width: 100vw;
+  z-index: 4;
+}
+
+#top-padding {
+  position: relative;
+  top: 0;
+  height: 60vh;
+}
+
+#bottom-padding {
+  position: relative;
+  bottom: 0;
+  height: 80vh;
+}
+
+#sticky {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 20%;
+  height: 50vh;
+  width: 90vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  background: #3D4849;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+
+ h1 {
+  font-family: sans-serif;
+  text-align: center;
+  font-size: 10em;
+  color: white;
+}
+
+.box {
+  height: 30vh;
+  width: 40vw;
+  left: 30vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  transition: left .5s ease-in;
+  z-index: 1;
+  position: absolute;
+  opacity: .5;
+}
+
+#one {
+  top: 120vh;
+  background: gray;
+}
+
+#two {
+  top: 155vh;
+  background: gray;
+  height: 50vh;
+}
+
+#three {
+  top: 210vh;
+  background: gray;
+  height: 60vh;
+}

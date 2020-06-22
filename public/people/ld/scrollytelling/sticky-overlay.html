@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="sticky-overlay.css"/>
+  </head>
+  <body>
+    <div id="background">
+      <div id="top-padding"></div>
+      <div id="sticky">
+        <h1 id="label-num">0</h1>
+      </div>
+      <div id="target">
+        <p>target line</p>
+      </div>
+      <div class="box" id="one"></div>
+      <div class="box" id="two"></div>
+      <div class="box" id="three"></div>
+    </div>
+      <div id="bottom-padding"></div>
+    <script>
+      window.addEventListener('scroll', () => {
+        const target = window.innerHeight/4
+        const boxes = document.getElementsByClassName('box')
+        const num = document.getElementById('label-num')
+        Array.prototype.forEach.call(boxes, (box, i) => {
+          const top = box.getBoundingClientRect().top
+          const bottom = box.getBoundingClientRect().bottom
+          if (target > top && bottom > target) {
+            box.setAttribute('style', 'background:yellow;')
+            num.innerHTML = i+1
+            return
+          }
+          box.setAttribute('style', 'background:gray')
+        })
+        const zero = document.getElementById('one').getBoundingClientRect().top
+        if (target < zero) {
+          num.innerHTML = 0
+        }
+      })
+    </script>
+  </body>
+</html>

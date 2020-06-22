@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" charset="utf-8">
+<head>
+  <link rel="stylesheet" href="observable.css"/>
+</head>
+<body>
+  <div id="observablehq-5dbc9487"></div>
+  <script type="module">
+    import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+    import define from "https://api.observablehq.com/d/26fd41dc443d772f.js?v=3";
+    const inspect = Inspector.into("#observablehq-5dbc9487");
+    (new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+  </script>
+  <div id="observablehq-fc71ba22"></div>
+  <script type="module">
+  import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+  import define from "https://api.observablehq.com/@d3/learn-d3-interaction.js?v=3";
+  const inspect = Inspector.into("#observablehq-fc71ba22");
+  (new Runtime).module(define, name => name === "viewof hover" ? inspect() : undefined);
+  </script>
+</body>
+</html>
