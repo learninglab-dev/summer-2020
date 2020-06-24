@@ -112,60 +112,6 @@ d3.csv("data/bokcenter-slack.csv", type, function (error, data) {
 
     console.log(data);
 
-
-    // //Tooltip
-    // var bisectDate = d3.bisector(function(d) { return d.Date; }).left;
-    //
-    // var focus2 = svg2.append("g")
-    //     .attr("class", "focus")
-    //     .style("display", "none");
-    //
-    // focus2.append("circle")
-    //     .attr("r", 5);
-    //
-    // focus2.append("rect")
-    //     .attr("class", "tooltip")
-    //     .attr("width", 100)
-    //     .attr("height", 50)
-    //     .attr("x", 10)
-    //     .attr("y", -22)
-    //     .attr("rx", 4)
-    //     .attr("ry", 4);
-    //
-    // focus2.append("text")
-    //     .attr("class", "tooltip-date")
-    //     .attr("x", 18)
-    //     .attr("y", -2);
-    //
-    // focus2.append("text")
-    //     .attr("x", 18)
-    //     .attr("y", 18)
-    //     .text("Messages: ");
-    //
-    // focus2.append("text")
-    //     .attr("class", "tooltip-messages")
-    //     .attr("x", 70)
-    //     .attr("y", 18);
-    //
-    // svg2.append("rect")
-    //     .attr("class", "overlay")
-    //     .attr("width", width)
-    //     .attr("height", height)
-    //     .on("mouseover", function() { focus2.style("display", null); })
-    //     .on("mouseout", function() { focus2.style("display", "none"); })
-    //     .on("mousemove", mousemove);
-    //
-    // function mousemove() {
-    //     var x0 = x.invert(d3.mouse(this)[0]),
-    //         i = bisectDate(data, x0, 1),
-    //         d0 = data[i - 1],
-    //         d1 = data[i],
-    //         d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-    //     focus2.attr("transform", "translate(" + x(d.Date) + "," + y(d["Messages posted"]) + ")");
-    //     focus2.select(".tooltip-date").text(dateFormatter(d.Date));
-    //     focus2.select(".tooltip-messages").text(d["Messages posted"]);
-    // }
-
     //Tooltip
     var bisectDate = d3.bisector(function(d) { return d.Date; }).left;
 
@@ -226,7 +172,6 @@ d3.csv("data/bokcenter-slack.csv", type, function (error, data) {
         focus2.select(".tooltip-messages").text(d["Messages posted"]);
     }
 
-
 });
 
 function brushed() {
@@ -238,6 +183,14 @@ function brushed() {
     svg2.select(".zoom").call(zoom.transform, d3.zoomIdentity
         .scale(width / (s[1] - s[0]))
         .translate(-s[0], 0));
+
+    var s = d3.event.selection || x_3_2.range();
+    x_3.domain(s.map(x_3_2.invert, x_3_2));
+    Line_chart_3.select(".line_3").attr("d", line_3);
+    focus_3.select(".axis--x_3").call(xAxis_3);
+    svg_3.select(".zoom_3").call(zoom_3.transform, d3.zoomIdentity
+        .scale(width_3 / (s[1] - s[0]))
+        .translate(-s[0], 0));
 }
 
 function zoomed() {
@@ -247,6 +200,12 @@ function zoomed() {
     Line_chart.select(".line").attr("d", line);
     focus.select(".axis--x").call(xAxis);
     context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
+
+    var t = d3.event.transform;
+    x_3.domain(t.rescaleX(x_3_2).domain());
+    Line_chart_3.select(".line_3").attr("d", line_3);
+    focus_3.select(".axis--x_3").call(xAxis_3);
+    context_3.select(".brush_3").call(brush_3.move, x_3.range().map(t.invertX, t));
 }
 
 function type(d) {
