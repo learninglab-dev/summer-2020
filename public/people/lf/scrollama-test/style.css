@@ -1,67 +1,91 @@
-#scrolly {
-        position: relative;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        background-color: #f3f3f3;
-        padding: 1rem;
-      }
+#background {
+  background: white;
+  min-width: 100vw;
+  min-height: 270vh;
+}
 
-  #scrolly > * {
-        -webkit-box-flex: 1;
-        -ms-flex: 1;
-        flex: 1;
-      }
+#target {
+  position: fixed;
+  top: 50%;
+  width: 100vw;
+  z-index: 2;
+}
 
-      article {
-        position: relative;
-        padding: 0 1rem;
-        max-width: 20rem;
-      }
+#top-padding {
+  position: relative;
+  top: 0;
+  height: 20vh;
+}
 
-      figure {
-        position: -webkit-sticky;
-        position: sticky;
-        width: 100%;
-        margin: 0;
-        -webkit-transform: translate3d(0, 0, 0);
-        -moz-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
-        background-color: #8a8a8a;
-        z-index: 0;
-      }
+#bottom-padding {
+  position: relative;
+  bottom: 0;
+  height: 20vh;
+}
 
-      figure p {
-        text-align: center;
-        padding: 1rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -moz-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        font-size: 8rem;
-        font-weight: 900;
-        color: #fff;
-      }
+#sticky {
+  position: sticky;
+  position: fixed;
+  top: 20%;
+  height: 50vh;
+  width: 90vw;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  background: #3D4849;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
 
-      .step {
-        margin: 0 auto 2rem auto;
-        background-color: #3b3b3b;
-        color: #fff;
-      }
+ h1 {
+  font-family: sans-serif;
+  text-align: center;
+  font-size: 10em;
+  color: white;
+}
 
-      .step:last-child {
-        margin-bottom: 0;
-      }
+p {
+  font-family: inherit;
+  vertical-align: text-top;
+  text-align: center;
+  font-size: 5em;
+}
 
-      .step.is-active {
-        background-color: goldenrod;
-        color: #3b3b3b;
-      }
+.box {
+  height: 30vh;
+  width: 40vw;
+  left: 30vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  transition: left .5s ease-in;
+  z-index: 1;
+  position: absolute;
+}
 
-      .step p {
-        text-align: center;
-        padding: 1rem;
-        font-size: 1.5rem;
-      }
+#one {
+  top: 100vh;
+  background: gray;
+  height: 100vh;
+}
+
+#two {
+  top: 205vh;
+  background: gray;
+  height: 100vh;
+}
+
+#three {
+  top: 310vh;
+  background: gray;
+  height: 100vh;
+}
+
+#four {
+  top: 415vh;
+  background: gray;
+  height: 100vh;
+}
