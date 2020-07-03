@@ -32,28 +32,28 @@ d3.csv("data/bokcenter-slack.csv", function(data) {
     // console.log(data.Date)
     // Now I can use this dataset:
 
-        // console.log(data)
-        // Add X axis --> it is a date format
-        var x = d3.scaleTime()
-            .domain(d3.extent(data, function(d) {
-                // console.log(d.Date);
-                return (d.Date); }))
-            .range([ 0, width ]);
-        var xAxis = svg1.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x)
-                .tickFormat(dateFormatter));
+    // console.log(data)
+    // Add X axis --> it is a date format
+    var x = d3.scaleTime()
+        .domain(d3.extent(data, function(d) {
+            // console.log(d.Date);
+            return (d.Date); }))
+        .range([ 0, width ]);
+    var xAxis = svg1.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x)
+            .tickFormat(dateFormatter));
 
-        // Add Y axis
-        var y = d3.scaleLinear()
-            .domain([0, d3.max(data, function(d) {
-                // console.log(+d["Messages posted"]);
-                return +d["Messages posted"];
-                // return 40000;
-            })])
-            .range([ height, 0 ]);
-        var yAxis = svg1.append("g")
-            .call(d3.axisLeft(y));
+    // Add Y axis
+    var y = d3.scaleLinear()
+        .domain([0, d3.max(data, function(d) {
+            // console.log(+d["Messages posted"]);
+            return +d["Messages posted"];
+            // return 40000;
+        })])
+        .range([ height, 0 ]);
+    var yAxis = svg1.append("g")
+        .call(d3.axisLeft(y));
 
     // Add the line
     svg1.append("path")
@@ -70,8 +70,97 @@ d3.csv("data/bokcenter-slack.csv", function(data) {
                 return y(d["Messages posted"]) })
         );
 
+
+
+    //Brushing
+
+    // Add a clipPath: everything out of this area won't be drawn.
+    var clip = svg1.append("defs").append("svg1:clipPath")
+        .attr("id", "clip")
+        .append("svg1:rect")
+        .attr("width", width )
+        .attr("height", height )
+        .attr("x", 0)
+        .attr("y", 0);
+
+    // Add brushing
+    var brush = d3.brushX()                   // Add the brush feature using the d3.brush function
+        .extent( [ [0,0], [width,height] ] )  // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+        .on("end", updateChart)               // Each time the brush selection changes, trigger the 'updateChart' function
+
+    // Create the line variable: where both the line and the brush take place
+    var line = svg1.append('g')
+        .attr("clip-path", "url(#clip)")
+
+    // Add the line
+    line.append("path")
+        .datum(data)
+        .attr("class", "line")  // I add the class line to be able to modify this line later on.
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+            .x(function(d) {
+                // console.log((d.Date));
+                return x(d.Date) })
+            .y(function(d) {
+                // console.log(d["Messages posted"]);
+                return y(d["Messages posted"]) })
+        );
+
+    // Add the brushing
+    line
+        .append("g")
+        .attr("class", "brush")
+        .call(brush);
+
+    // A function that set idleTimeOut to null
+    var idleTimeout
+    function idled() { idleTimeout = null; }
+
+    // A function that update the chart for given boundaries
+    function updateChart() {
+
+        // What are the selected boundaries?
+        extent = d3.event.selection
+
+        // If no selection, back to initial coordinate. Otherwise, update X axis domain
+        if(!extent){
+            if (!idleTimeout) return idleTimeout = setTimeout(idled, 350); // This allows to wait a little bit
+            x.domain([ 4,8])
+        }else{
+            x.domain([ x.invert(extent[0]), x.invert(extent[1]) ])
+            line.select(".brush").call(brush.move, null) // This remove the grey brush area as soon as the selection has been done
+        }
+
+        // Update axis and line position
+        xAxis.transition().duration(1000).call(d3.axisBottom(x).tickFormat(dateFormatter))
+        line
+            .select('.line')
+            .transition()
+            .duration(1000)
+            .attr("d", d3.line()
+                .x(function(d) { return x(d.Date) })
+                .y(function(d) { return y(d["Messages posted"]) })
+            );
+    }
+
+    // If user double click, reinitialize the chart
+    svg1.on("dblclick",function(){
+        x.domain(d3.extent(data, function(d) { return d.Date; }))
+        xAxis.transition().call(d3.axisBottom(x).tickFormat(dateFormatter))
+        line
+            .select('.line')
+            .transition()
+            .attr("d", d3.line()
+                .x(function(d) { return x(d.Date) })
+                .y(function(d) { return y(d["Messages posted"]) })
+            )
+    });
+
     //Tooltip
 
+    //New svg grouping to formulate the tooltip on
     var focus = svg1.append("g")
         .attr("class", "focus")
         .style("display", "none");
@@ -96,11 +185,11 @@ d3.csv("data/bokcenter-slack.csv", function(data) {
     focus.append("text")
         .attr("x", 18)
         .attr("y", 18)
-        .text("Likes:");
+        .text("Messages:");
 
     focus.append("text")
         .attr("class", "tooltip-messages")
-        .attr("x", 60)
+        .attr("x", 70)
         .attr("y", 18);
 
     svg1.append("rect")
@@ -121,90 +210,4 @@ d3.csv("data/bokcenter-slack.csv", function(data) {
         focus.select(".tooltip-date").text(dateFormatter(d.Date));
         focus.select(".tooltip-messages").text(d["Messages posted"]);
     }
-
-    //Brushing
-
-    // Add a clipPath: everything out of this area won't be drawn.
-    // var clip = svg1.append("defs").append("svg1:clipPath")
-    //     .attr("id", "clip")
-    //     .append("svg1:rect")
-    //     .attr("width", width )
-    //     .attr("height", height )
-    //     .attr("x", 0)
-    //     .attr("y", 0);
-    //
-    // // Add brushing
-    // var brush = d3.brushX()                   // Add the brush feature using the d3.brush function
-    //     .extent( [ [0,0], [width,height] ] )  // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
-    //     .on("end", updateChart)               // Each time the brush selection changes, trigger the 'updateChart' function
-    //
-    // // Create the line variable: where both the line and the brush take place
-    // var line = svg1.append('g')
-    //     .attr("clip-path", "url(#clip)")
-    //
-    // // Add the line
-    // line.append("path")
-    //     .datum(data)
-    //     .attr("class", "line")  // I add the class line to be able to modify this line later on.
-    //     .attr("fill", "none")
-    //     .attr("stroke", "steelblue")
-    //     .attr("stroke-width", 1.5)
-    //     .attr("d", d3.line()
-    //         .x(function(d) {
-    //             // console.log((d.Date));
-    //             return x(d.Date) })
-    //         .y(function(d) {
-    //             // console.log(d["Messages posted"]);
-    //             return y(d["Messages posted"]) })
-    //     );
-    //
-    // // Add the brushing
-    // line
-    //     .append("g")
-    //     .attr("class", "brush")
-    //     .call(brush);
-    //
-    // // A function that set idleTimeOut to null
-    // var idleTimeout
-    // function idled() { idleTimeout = null; }
-    //
-    // // A function that update the chart for given boundaries
-    // function updateChart() {
-    //
-    //     // What are the selected boundaries?
-    //     extent = d3.event.selection
-    //
-    //     // If no selection, back to initial coordinate. Otherwise, update X axis domain
-    //     if(!extent){
-    //         if (!idleTimeout) return idleTimeout = setTimeout(idled, 350); // This allows to wait a little bit
-    //         x.domain([ 4,8])
-    //     }else{
-    //         x.domain([ x.invert(extent[0]), x.invert(extent[1]) ])
-    //         line.select(".brush").call(brush.move, null) // This remove the grey brush area as soon as the selection has been done
-    //     }
-    //
-    //     // Update axis and line position
-    //     xAxis.transition().duration(1000).call(d3.axisBottom(x).tickFormat(dateFormatter))
-    //     line
-    //         .select('.line')
-    //         .transition()
-    //         .duration(1000)
-    //         .attr("d", d3.line()
-    //             .x(function(d) { return x(d.Date) })
-    //             .y(function(d) { return y(d["Messages posted"]) })
-    //         );
-    // }
-    //
-    // // If user double click, reinitialize the chart
-    // svg1.on("dblclick",function(){
-    //     x.domain(d3.extent(data, function(d) { return d.Date; }))
-    //     xAxis.transition().call(d3.axisBottom(x).tickFormat(dateFormatter))
-    //     line
-    //         .select('.line')
-    //         .transition()
-    //         .attr("d", d3.line()
-    //             .x(function(d) { return x(d.Date) })
-    //             .y(function(d) { return y(d["Messages posted"]) })
-    //         )
-    // });
 });

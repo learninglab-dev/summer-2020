@@ -37,6 +37,11 @@ html {
   text-shadow: none;
 }
 
+::selection_3 {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
 /*
  * A better looking default horizontal rule
  */
@@ -138,7 +143,6 @@ textarea {
   white-space: inherit;
   width: auto;
 }
-
 /*
  * Hide visually and from screen readers, but maintain layout
  */
@@ -300,10 +304,9 @@ body {
   stroke: #000;
 }
 
-.tooltip-date, .tooltip-likes {
+.tooltip-date, .tooltip-messages {
   font-weight: bold;
 }
-
 
 .line {
   fill: none;
@@ -315,3 +318,163 @@ body {
   fill: none;
   pointer-events: all;
 }
+
+.line_3 {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+.zoom_3 {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+
+.axis_3 path,
+.axis_3 line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis_3 path {
+  display: none;
+}
+
+.line_3 {
+  fill: none;
+  stroke: green;
+  stroke-width: 1.5px;
+}
+
+.line_3_active {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.overlay_3 {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus_3 circle {
+  fill: steelblue;
+}
+
+.focus_3 text {
+  font-size: 10px;
+}
+
+.tooltip_3 {
+  fill: white;
+  stroke: #000;
+}
+
+.tooltip-date_3, .tooltip-weekly-active_3 {
+  font-weight: bold;
+}
+
+.line_4 {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+.zoom_4 {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+
+.axis_4 path,
+.axis_4 line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis_4 path {
+  display: none;
+}
+
+.line_4 {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.overlay_4 {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus_4 circle {
+  fill: steelblue;
+}
+
+.focus_4 text {
+  font-size: 10px;
+}
+
+.tooltip_4 {
+  fill: white;
+  stroke: #000;
+}
+
+.tooltip-date_4, .tooltip-weekly-active_4 {
+  font-weight: bold;
+}
+
+
+.line_5 {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+.zoom_5 {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+
+.axis_5 path,
+.axis_5 line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis_5 path {
+  display: none;
+}
+
+.line_5 {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.overlay_5 {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus_5 circle {
+  fill: steelblue;
+}
+
+.focus_5 text {
+  font-size: 10px;
+}
+
+.tooltip_5 {
+  fill: white;
+  stroke: #000;
+}
+
+.tooltip-date_5, .tooltip-weekly-active_4 {
+  font-weight: bold;
+}
+
+
+
